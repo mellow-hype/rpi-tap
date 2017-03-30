@@ -62,7 +62,7 @@ Note that Raspbian does not come with a US keyboard layout or locale enabled by 
 
 After making these changes, I updated the system.
 
-```shell
+```sh
 $ sudo apt-get update && sudo apt-get upgrade
 ```
 
@@ -72,7 +72,7 @@ Next, I set up the the wireless interface(`wlan0`) to serve as an access point u
 ### Configure `wlan0` IP settings
 I started by configuring `wlan0` with static IP settings. I saved a copy of '/etc/network/interfaces' as 'interfaces.orig' to preserve the default settings and edited the original file. I commented out the existing block for `wlan0` and added these settings:
 
-```config
+```
 iface wlan0 inet static
     address 10.0.1.1
     network 10.0.1..0
@@ -81,7 +81,7 @@ iface wlan0 inet static
 ```
 
 I restarted the network to apply the changes (this can also be done via reboot):
-```shell
+```sh
 $ sudo /etc/init.d/networking restart
 ```
 
@@ -89,14 +89,14 @@ $ sudo /etc/init.d/networking restart
 `hostapd` is used to turn the wireless interface into an access point and `dnsmasq` will serve IP addresses to clients via DHCP.
 
 I began by installing both tools:
-```shell
+```sh
 $ sudo apt-get install hostapd dnsmasq
 ```
 
 #### hostapd
 I created a config file for `hostapd` with these settings and saved it at '/etc/hostapd/hostapd.conf'.
 
-```config
+```
 # wireless interface to create access point
 interface=wlan0
 # driver for the built-in wifi in the Pi 
@@ -128,19 +128,19 @@ rsn_pairwise=CCMP
 ```
 
 Next, I edited '/etc/default/hostapd' and uncommented the following line and pointed it to the config file I had created.
-```config
+```
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
 ```
 
 Finally, I enabled the `hostapd` service so that it is started at boot.
-```shell
+```sh
 $ sudo systemctl enable hostapd
 ```
 
 #### dnsmasq
 Next, I renamed the default `dnsmasq` configuration file at '/etc/dnsmasq.conf' to 'dnsmasq.conf.orig' to preserve the original settings. I created a new file with the following settings where the default config file used to be ('/etc/dnsmasq.conf').
 
-```config
+```
 interface=wlan0         # Use interface wlan0  
 listen-address=10.0.1.1 # Explicitly specify the address to listen on  
 bind-interfaces         # Bind to the interface to make sure we aren't sending things elsewhere   
@@ -151,7 +151,7 @@ dhcp-range=10.0.1.2,10.0.1.16,6h # DHCP range settings
 *Note*:These IP addresses should match the settings used to configure the static IP settings of the wireless interface.
 
 Finally, I enabled the `dnsmasq` service so that it is started at boot.
-```shell
+```sh
 $ sudo systemctl enable dnsmasq
 ```
 
@@ -168,13 +168,13 @@ I connected the USB-to-Ethernet adapter and proceeded.
 
 ### Creating the Bridge Adapter
 I began by installing `bridge-utils` to create the bridge interface.
-```shell
+```sh
 $ sudo apt-get install bridge-utils
 ```
 Next, I edited '/etc/network/interfaces' to add an entry for the new bridge interface (`br0`) and disable the existing entry for `eth0` and the new `eth1` interface, since the `br0` will bring up the interfaces it is assigned. 
 
 This was my final '/etc/network/interfaces' file, with the settings for the wireless interface from before included:
-```config
+```
 # /etc/network/interfaces
 # loopback interface
 auto lo
