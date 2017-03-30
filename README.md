@@ -4,8 +4,6 @@
   <img src="rpi-tap-setup.png">
 </p>
 
-![Raspberry Pi tap/bridge](rpi-tap-setup.png)
-
 While working on [berry-sense](https://github.com/mellow-hype/berry-sense) and learning about network traffic analysis recently, I had the need for a dedicated device to use as an Ethernet bridge/tap for capturing traffic. This would give me a chance to test the Raspberry Pi's performance while performing traffic captures, as well as produce a usable device for performing simple traffic analysis.
 
 These are the configurations I made to accomplish this.
