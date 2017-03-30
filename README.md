@@ -1,4 +1,7 @@
 # Overview
+
+![Raspberry Pi tap/bridge](rpi-tap-setup.jpg)
+
 While working on [berry-sense](https://github.com/mellow-hype/berry-sense) and learning about network traffic analysis recently, I had the need for a dedicated device to use as an Ethernet bridge/tap for capturing traffic. This would give me a chance to test the Raspberry Pi's performance while performing traffic captures, as well as produce a usable device for performing simple traffic analysis.
 
 These are the configurations I made to accomplish this.
@@ -201,8 +204,6 @@ I rebooted the Pi to enable the new network settings and bring up the bridge int
 
 # Testing Things Out
 With everything installed and properly configured, it was time to test it out. 
-
-![Raspberry Pi tap/bridge](rpi-tap-setup.jpg)
 
 I associated to the Pi via wifi and logged in via ssh. I confirmed that the bridge interface was up before proceeding. I then connected an Ethernet cable from my laptop to `eth1` and another cable from my gateway device to `eth0`. My laptop received an IP address via DHCP and I confirmed that I was able to reach the Internet. 
 
